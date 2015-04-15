@@ -1,0 +1,28 @@
+Student: Mardaloescu Serban
+Grupa: 334CA
+
+
+								Tema 2 - APD
+			Indexarea documentelor folosind paradigma Map-Reduce
+			
+	Pentru rezolvarea temei am folosit scheletul de la laboratorul Replicated Workers, doar ca l-am modificat putin. Astfel ca
+am 7 clase si voi incerca sa prezint ce face fiecare din acestea. Programul primeste ca parametru numarul de thread-uri si 
+numele documentelor ce urmeaza sa fie testate.
+	*Main: clasa principala, ce contine atat functia `main` cat si o alta functie, `processDocument` ce imparte un document 
+intr-un numar de octeti egal cu cel citit din fisierul de intrare. In functia principala, pentru inceput, citesc din fisierul
+de intrare datele folositoare si, de asemenea, initializez numarul de thread-uri. Apoi, creez un obiect de tip WorkPool si
+apelez functia `processDocument` pentru fiecare document ce trebuie verificat. Pornesc apot thread-urile si le join-uiesc.
+	*WorkPool: clasa este imprumutata de la laborator, asa cum am mentionat mai sus, dar este putin modificata, si anume,
+LinkedList-ul de task-uri s-a transformat intr-un ArrayList de LinkedList de solutii partiale. Motivul pentru care am ales
+aceasta abordare este acela ca am de lucrat cu mai multe documente, asa ca am nevoie sa stiu despre fiecare solutie si implicit 
+fiecare cuvant din ce document provin(e). Doua metode sunt demne de mentionat, si anume `getWork` si `putWork`, metode ce adauga,
+respectiv extrag task-uri din WorkPool. Parametrul in plus pe care acestea il primesc fata de scheletul de laborator este indicele
+documentului pentru care opereaza.
+	*PartialSolution: clasa ce contine un obiect de tip String ce reprezinta un task din WorkPool.
+	*Pair: clasa ce intruchipeaza o cheie din HashTable-ul folosit pentru a stoca numarul de aparitii ale unui cuvant. Atributele 
+acestei clase sunt: cuvantul si indicele corespondent documentului din care face parte cuvantul.
+	*Map: clasa ce contine in primul rand structura de date in care scriu toate thread-urile. Aceasta este un HashTable<Pair, Integer>.
+Aici se realizeaza operatia de Map, ea continand metode de actualizare/adaugare de intrari in HashTable. Mai multe detalii sunt in 
+codul comentat.
+	*Reduce: clasa contine o metoda ce calculeaza procentul de similaritate intre documentul sursa si toate celelalte documente
+Mai multe detalii in cod :).
